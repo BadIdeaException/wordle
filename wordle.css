@@ -1,0 +1,230 @@
+body {
+	font-family: sans-serif;
+	font-size: 16pt;
+	position: relative;
+	overflow: hidden;
+}
+
+header {
+	text-align: center;
+	font-family: cursive, sans-serif;
+	font-size: 250%;
+	font-weight: bold;
+	letter-spacing: 0.1ch;
+	min-height: 56pt;
+	max-height: 20vh;
+	color: indigo;
+}
+
+header::first-letter {
+	background-color: darkgreen;
+}
+
+#keyboard.hidden {
+	transition-delay: 2s;
+	bottom: calc(-3ch - 6ex - 3em);
+}
+#keyboard {
+	transition: bottom 1s;
+	transition-delay: 0.5s;
+	background-color: #FAFAFA;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1ex;
+	justify-content: space-between;
+}
+.keyrow {
+	display:  flex;
+	justify-content: space-around;
+}
+
+.key {
+	width: 1em;
+	height: 1em;
+	padding: 1ex 0.5ch;
+	border: 1px solid indigo;
+	text-align: center;
+	font-size: 85%;
+	cursor: pointer;
+}
+
+#key-backspace {
+	width: 1.5em;
+}
+
+#key-clearAll {
+	width: 1.2em;
+}
+
+.shaking {
+	animation-delay: 0s !important;
+	animation: 0.12s linear shake;
+	animation-iteration-count: 6;
+	animation-fill-mode: none;
+}
+@keyframes shake {
+	from { rotate: z 0deg }
+	25% { rotate: z 5deg }
+	50% { rotate: z 0deg }
+	75% { rotate: z -5deg }
+	to { rotate: z 0deg }
+}
+#key-backspace, #key-enter, #key-clearAll {
+	background-color: indigo;
+	color: white;
+}
+
+#board {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(5, 2em);
+	column-gap: 1em;
+	row-gap: 0.66em;
+	grid-auto-rows: 2em;
+	justify-content: center;
+	overflow-y: scroll;
+	max-height: min(calc(80vh - 3em - 10ex), calc(100vh - 3em - 10ex - 56pt));
+}
+
+.place {
+	text-align: center;
+	border: 1px solid indigo;
+	padding: 25%;
+	cursor: default;
+	animation-delay: attr('data-column');
+}
+
+.key.misplaced, .key.correct, .key.wrong {
+	color: white;
+	transition: all 0.33s;
+	transition-delay: 2s;	
+}
+.key.misplaced {
+	background-color: goldenrod;
+}
+.key.correct {
+	background-color: darkgreen;
+}
+.key.wrong {
+	background-color: dimgray;
+}
+
+.place.misplaced, .place.correct, .place.wrong {
+	animation-duration: 1s, 1s;
+	animation-iteration-count: 1, 1;
+	animation-timing-function: linear, steps(1, end);
+	animation-fill-mode: none, forwards;
+	animation-name: rotate, tint;
+}
+.place.misplaced {
+	animation-name: rotate, tint-misplaced;
+}
+.place.correct {
+	animation-name: rotate, tint-correct;
+}
+.place.wrong {
+	animation-name: rotate, tint-wrong;
+}
+
+@keyframes rotate {
+	from {
+		rotate: y 0turn;
+	}
+	to {
+		rotate: y 1turn;
+	}
+}
+@keyframes tint-wrong {
+	from {
+		color: black;
+		background-color: white;
+	}
+	25% {
+		color: white;
+		background-color: indigo;
+	}
+	75% {
+		background-color: dimgray;
+	}
+	to {
+		color: white;
+		background-color: dimgray;	
+	}
+}
+
+@keyframes tint-misplaced {
+	from {
+		color: black;
+		background-color: white;
+	}
+	25% {
+		color: white;
+		background-color: indigo;
+	}
+	75% {
+		background-color: goldenrod;
+	}
+	to {
+		color: white;
+		background-color: goldenrod;
+	}
+}
+
+@keyframes tint-correct {
+	from {
+		color: black;
+		background-color: white;
+	}
+	25% {
+		color: white;
+		background-color: indigo;
+	}
+	75% {
+		background-color: darkgreen;
+	}
+	to {
+		color: white;
+		background-color: darkgreen;
+	}
+}
+
+#resultscreen.hidden {
+	left: 100%;	
+	transition-delay: 0s;
+}
+#resultscreen {
+	text-align: center;
+	font-size: 120%;
+	transition: left 0.5s;
+	transition-delay: 2.5s;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	max-height: max(calc(80vh - 16em),calc(100vh - 56pt - 16em));
+	min-height: calc(3em + 9ex);
+	height: 100%;
+}
+#win.hidden {
+	display: none;
+}
+#lose.hidden {
+	display: none;
+}
+
+#resultscreen button {
+	background-color: indigo;
+	color: white;
+	border: none;
+	padding: 1.5ex 1.5em;
+	font-size: 100%;
+	margin: 0 15%;
+	cursor: pointer;
+}
