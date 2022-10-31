@@ -95,7 +95,6 @@ header::first-letter {
 	border: 1px solid indigo;
 	padding: 25%;
 	cursor: default;
-	animation-delay: attr('data-column');
 }
 
 .key.misplaced, .key.correct, .key.wrong {
@@ -103,14 +102,14 @@ header::first-letter {
 	transition: all 0.33s;
 	transition-delay: 2s;	
 }
+.key.wrong {
+	background-color: dimgray;
+}
 .key.misplaced {
 	background-color: goldenrod;
 }
 .key.correct {
 	background-color: darkgreen;
-}
-.key.wrong {
-	background-color: dimgray;
 }
 
 .place.misplaced, .place.correct, .place.wrong {

@@ -52,12 +52,17 @@ function clearAll() {
 }
 
 function rate(input, word) {
+	const countOf = (char, str) => [...str].reduce((count, letter) => count + (char === letter ? 1 : 0), 0);
+	
 	input = input.toUpperCase();
 	word = word.toUpperCase();
 	return [...input].map((character, index) => 
 		word[index] === character ? 
 		'correct' : 
-		{ true: 'misplaced', false: 'wrong' }[word.includes(character)]
+		{ 
+			true: 'misplaced', 
+			false: 'wrong' 
+		}[ countOf(character, input.slice(0, index + 1)) <= countOf(character, word) - [...input.slice(index + 1)].filter((char, idx) => char === character && input.slice(index + 1)[idx] === word.slice(index + 1)[idx]).length ]
 	)
 }
 
